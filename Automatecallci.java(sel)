@@ -1,0 +1,31 @@
+import org.openqa.selenium.*;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Automatecallci {
+
+    public static void main(String[] args) {
+        System.setProperty("webdriver.edge.driver",
+                "C:\\Users\\Trisha\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+
+        WebDriver driver = new EdgeDriver();
+
+        try {
+            driver.get("C:\\Users\\Trisha\\Documents\\minical.html");
+            // Enter numbers
+            driver.findElement(By.id("a")).sendKeys("5");
+            driver.findElement(By.id("b")).sendKeys("7");
+
+            // Click Add
+            driver.findElement(By.tagName("button")).click();
+
+            // Get result
+            String result = driver.findElement(By.id("result")).getText();
+            System.out.println("Calculated Result: " + result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
+        }
+    }
+}
