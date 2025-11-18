@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Mini Calculator</h2>
+
+  <input id="a" placeholder="Enter number 1">
+  <input id="b" placeholder="Enter number 2">
+
+  <button onclick="add()">Add</button>
+
+  <p id="result"></p>
+
+  <script>
+    function add() {
+      let x = parseInt(document.getElementById("a").value);
+      let y = parseInt(document.getElementById("b").value);
+      document.getElementById("result").innerHTML = x + y;
+    }
+  </script>
+</body>
+</html>
