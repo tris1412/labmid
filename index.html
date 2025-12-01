@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pizza Order</title>
+</head>
+<body>
+
+<h2>Pizza Order</h2>
+
+<!-- DO NOT USE FORM -->
+<input type="text" name="name" placeholder="Enter your name"><br><br>
+
+<select name="size">
+    <option>Small</option>
+    <option>Medium</option>
+    <option>Large</option>
+</select><br><br>
+
+<button type="button" onclick="placeOrder()">Order</button>
+
+<p id="msg"></p>
+
+<script>
+    function placeOrder() {
+        document.getElementById("msg").innerText = "Order placed!";
+    }
+</script>
+
+</body>
+</html>
