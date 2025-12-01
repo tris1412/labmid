@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: trisd7/myapp:v1
+        image: trisd7/java-new:latest
         ports:
         - containerPort: 5000
         resources:
