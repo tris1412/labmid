@@ -1,19 +1,8 @@
-# Use lightweight Python image
-FROM python:3.10-slim
-
-# Set working directory
+FROM  eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
-# Copy requirements first & install
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY Add.java .
 
-# Copy the entire application
-COPY . .
+RUN javac Add.java
 
-# Expose Flask port
-EXPOSE 5000
-
-# Start the app
-CMD ["python", "app.py"]
-
+CMD ["java", "Add"]
