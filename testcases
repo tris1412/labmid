@@ -1,0 +1,207 @@
+
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Dockform {
+
+    public static void main(String args[]){
+        System.out.println("Test Started...");
+
+        // Path to your msedgedriver
+        System.setProperty("webdriver.edge.driver",
+                "C:\\Users\\Trisha\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+
+        WebDriver driver = new EdgeDriver();
+
+        try {
+            // Open the website running inside Docker
+            driver.get("http://localhost:8080 /reg.html");
+            System.out.println("Opened registration form");
+
+            // Fill the fields
+            driver.findElement(By.id("username")).sendKeys("testuser");
+            driver.findElement(By.id("email")).sendKeys("test@mail.com");
+            driver.findElement(By.id("password")).sendKeys("Test@123");
+            driver.findElement(By.id("confirmPassword")).sendKeys("Test@123");
+
+            // Click Register
+            driver.findElement(By.id("registerBtn")).click();
+
+            // Wait for alert
+            Thread.sleep(1000);
+
+            // Handle the success alert
+            Alert alert = driver.switchTo().alert();
+            String alertText = alert.getText();
+
+            if (alertText.contains("Registration Successful")) {
+                System.out.println("✔ TEST PASSED: Registration Successful alert detected!");
+            } else {
+                System.out.println("✘ TEST FAILED: Unexpected alert text -> " + alertText);
+            }
+
+            alert.accept(); // close the alert
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            driver.quit();
+            System.out.println("Test Finished");
+        }
+    }
+}
+
+
+re.html
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+
+    <!-- CSS INSIDE HTML -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f3;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 350px;
+            margin: 70px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #005bbb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #004199;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>Registration Form</h2>
+
+        <form id="regForm">
+            <label>Username</label>
+            <input type="text" id="username">
+            <span class="error" id="usernameError"></span>
+
+            <label>Email</label>
+            <input type="text" id="email">
+            <span class="error" id="emailError"></span>
+
+            <label>Password</label>
+            <input type="password" id="password">
+            <span class="error" id="passwordError"></span>
+
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword">
+            <span class="error" id="confirmPasswordError"></span>
+
+            <button type="submit" id="registerBtn">Register</button>
+        </form>
+    </div>
+
+    <!-- JAVASCRIPT INSIDE HTML -->
+    <script>
+        document.getElementById("regForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            document.getElementById("usernameError").innerText = "";
+            document.getElementById("emailError").innerText = "";
+            document.getElementById("passwordError").innerText = "";
+            document.getElementById("confirmPasswordError").innerText = "";
+
+            let valid = true;
+
+            let username = document.getElementById("username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (username === "") {
+                document.getElementById("usernameError").innerText = "Username is required";
+                valid = false;
+            }
+
+            if (email === "") {
+                document.getElementById("emailError").innerText = "Email is required";
+                valid = false;
+            } else if (!email.includes("@") || !email.includes(".")) {
+                document.getElementById("emailError").innerText = "Enter valid email";
+                valid = false;
+            }
+
+            if (password === "") {
+                document.getElementById("passwordError").innerText = "Password is required";
+                valid = false;
+            }
+
+            if (confirmPassword === "") {
+                document.getElementById("confirmPasswordError").innerText = "Please confirm password";
+                valid = false;
+            } else if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").innerText = "Passwords do not match";
+                valid = false;
+            }
+
+            if (valid) {
+                alert("Registration Successful!");
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+dockerfile
+
+
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+EXPOSE 80
+
+
+
