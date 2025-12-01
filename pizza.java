@@ -11,7 +11,7 @@ public class Pizza {
                 "C:\\Users\\Trisha\\Downloads\\edgedriver_win64\\msedgedriver.exe");
         WebDriver driver=new EdgeDriver();
         try {
-            driver.get("C:\\Users\\Trisha\\Desktop\\pizza.html");
+            driver.get("http://localhost:8088/index.html");
             System.out.println("Title"+ driver.getTitle());
         
             driver.findElement(By.name("name")).sendKeys("Trisha");
